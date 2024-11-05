@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" PrivateAssets="true" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="opcodes.t4.tt">
+        <Generator>TextTemplatingFileGenerator</Generator>
+        <LastGenOutput>opcodes.t4.cs</LastGenOutput>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="opcodes.t4.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>opcodes.t4.tt</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>
