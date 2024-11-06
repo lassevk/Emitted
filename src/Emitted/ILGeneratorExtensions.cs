@@ -120,4 +120,23 @@ public static partial class ILGeneratorExtensions
     }
 
     public static ILGenerator box<T>(this ILGenerator il) => il.box(typeof(T));
+
+    /// <summary>
+    /// Emits the opcode <see cref="OpCodes.Switch"/>
+    /// </summary>
+    /// <param name="il">
+    /// The <see cref="ILGenerator" /> to emit the opcode to.
+    /// </param>
+    /// <param name="value">
+    /// The <see cref="Label"/> array to emit with the opcode.
+    /// </param>
+    /// <returns>
+    /// The <see cref="ILGenerator"/> passed in through <paramref name="il"/>.
+    /// </returns>
+    public static ILGenerator @switch(this ILGenerator il, Label[] value)
+    {
+        Guard.NotNull(il);
+        il.Emit(OpCodes.Switch, value);
+        return il;
+    }
 }

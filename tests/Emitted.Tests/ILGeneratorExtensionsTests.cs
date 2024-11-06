@@ -15,7 +15,7 @@ public partial class ILGeneratorExtensionsTests
 
     private static IEnumerable<string> OpCodes()
     {
-        foreach (var field in typeof(OpCodes).GetFields(BindingFlags.Static | BindingFlags.Public))
+        foreach (FieldInfo field in typeof(OpCodes).GetFields(BindingFlags.Static | BindingFlags.Public))
         {
             if (field.FieldType != typeof(OpCode))
                 continue;

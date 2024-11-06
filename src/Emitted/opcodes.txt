@@ -216,8 +216,6 @@ Stobj:Type
 
 Stsfld:FieldInfo
 
-@Switch:Label[]
-
 Tailcall
 
 @Throw
