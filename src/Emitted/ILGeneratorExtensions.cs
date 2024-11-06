@@ -11,6 +11,62 @@ namespace Emitted;
 [PublicAPI]
 public static partial class ILGeneratorExtensions
 {
+    public static ILGenerator scope(this ILGenerator il, Action<ILGenerator> scopedCode)
+    {
+        Guard.NotNull(il);
+        Guard.NotNull(scopedCode);
+
+        il.BeginScope();
+        scopedCode(il);
+        il.EndScope();
+        return il;
+    }
+
+    public static ILGenerator @try(this ILGenerator il, Action<ILGenerator> tryCode)
+    {
+        Guard.NotNull(il);
+        Guard.NotNull(tryCode);
+
+        il.BeginExceptionBlock();
+        tryCode(il);
+        il.EndExceptionBlock();
+        return il;
+    }
+
+    public static ILGenerator @catch(this ILGenerator il, Type exceptionType, Action<ILGenerator> catchBlockCode)
+    {
+        Guard.NotNull(il);
+        Guard.NotNull(exceptionType);
+        Guard.NotNull(catchBlockCode);
+
+        il.BeginCatchBlock(exceptionType);
+        catchBlockCode(il);
+        return il;
+    }
+
+    public static ILGenerator @finally(this ILGenerator il, Action<ILGenerator> finallyCode)
+    {
+        Guard.NotNull(il);
+        Guard.NotNull(finallyCode);
+
+        il.BeginFinallyBlock();
+        finallyCode(il);
+        il.endfinally();
+        return il;
+    }
+
+    public static ILGenerator @throw(this ILGenerator il, Type exceptionType)
+    {
+        Guard.NotNull(il);
+        Guard.NotNull(exceptionType);
+        il.ThrowException(exceptionType);
+        return il;
+    }
+
+    public static ILGenerator @throw<T>(this ILGenerator il)
+        where T : Exception
+        => @throw(il, typeof(T));
+
     public static LocalBuilder DeclareLocal<T>(this ILGenerator il, bool pinned = false)
     {
         Guard.NotNull(il);
